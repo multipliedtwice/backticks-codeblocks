@@ -1,6 +1,6 @@
 {
   "name": "backticks-codeblocks",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A utility to parse text with backticks into code blocks and inline code for HTML formatting",
   "main": "./dist/index.js",
   "scripts": {
