@@ -1,8 +1,8 @@
 {
   "name": "backticks-codeblocks",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "A utility to parse text with backticks into code blocks and inline code for HTML formatting",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "tsc && terser -c -m -o dist/index.js -- dist/index.js"

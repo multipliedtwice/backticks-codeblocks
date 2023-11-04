@@ -140,7 +140,84 @@ describe('processText', () => {
     const input = 'Multi-line ```\ncode block\n```';
     const expectedSegments = [
       'Multi-line ',
-      { code: '\ncode block\n', isBlock: true },
+      { code: 'code block', isBlock: true },
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+
+  it('handles code blocks with language specifiers', () => {
+    const input = '```javascript\nconsole.log("hello");\n```';
+    const expectedSegments = [
+      { code: 'javascript\nconsole.log("hello");', isBlock: true },
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('handles backticks at the start of the text', () => {
+    const input = '`code` at the start';
+    const expectedSegments = [
+      { code: 'code', isBlock: false },
+      ' at the start',
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('handles backticks with spaces inside', () => {
+    const input = '` code with spaces ` and more text';
+    const expectedSegments = [
+      { code: ' code with spaces ', isBlock: false },
+      ' and more text',
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('handles multiple backticks for emphasis in code', () => {
+    const input = '```some ``emphasized`` code```';
+    const expectedSegments = [
+      { code: 'some ``emphasized`` code', isBlock: true },
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('handles backticks inside a word', () => {
+    const input = 'word`inside`word';
+    const expectedSegments = ['word', { code: 'inside', isBlock: false }, 'word'];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('handles multiple lines of code with inline comments', () => {
+    const input = '```\nline1\n// inline comment\nline3\n```';
+    const expectedSegments = [
+      { code: 'line1\n// inline comment\nline3', isBlock: true },
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('ignores single backticks within code blocks', () => {
+    const input = '```code ` with single ` backtick```';
+    const expectedSegments = [
+      { code: 'code ` with single ` backtick', isBlock: true },
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('handles mixed content with plaintext and code blocks', () => {
+    const input = 'Text, `inline code`, text, ```block code```';
+    const expectedSegments = [
+      'Text, ',
+      { code: 'inline code', isBlock: false },
+      ', text, ',
+      { code: 'block code', isBlock: true },
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('differentiates between single line and multi-line code blocks', () => {
+    const input = '`single line code` and ```\nmulti-line\ncode\n```';
+    const expectedSegments = [
+      { code: 'single line code', isBlock: false },
+      ' and ',
+      { code: 'multi-line\ncode', isBlock: true },
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
@@ -183,5 +260,19 @@ describe('processText', () => {
     console.log(`Average time per iteration: ${duration / iterations}ms`);
 
     expect(duration).toBeLessThan(maxTime);
+  });
+
+  it('handles language specifiers in code blocks', () => {
+    const input = '```javascript\nconsole.log("hello");\n```';
+    const expectedSegments = [
+      { code: 'javascript\nconsole.log("hello");', isBlock: true },
+    ];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+  
+  it('treats single backticks within words as apostrophes', () => {
+    const input = "It's not a `code` block";
+    const expectedSegments = ["It's not a ", { code: 'code', isBlock: false }, " block"];
+    expect(processText(input)).toEqual(expectedSegments);
   });
 });

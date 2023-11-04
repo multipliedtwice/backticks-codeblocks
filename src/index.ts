@@ -7,7 +7,8 @@ export function processText(text: string): (string | CodeSegment)[] {
   text = text.replace(/```[\s]*``` /g, '');
   const escapedTickPlaceholder = "ESC_TICK";
   text = text.replace(/\\`/g, escapedTickPlaceholder);
-  const blockRegex = /```(.*?[^`])```/gs;
+  const blockRegex = /```(?:[^\S\r\n]*(?:\r\n|\r|\n))?([\s\S]*?)(?:\r\n|\r|\n)?```/gs;
+
   const inlineRegex = /(?<!`)`(?!`)(.*?)`(?!`)/g;
 
   const segments: (string | CodeSegment)[] = [];
