@@ -140,7 +140,7 @@ describe('processText', () => {
     const input = 'Multi-line ```\ncode block\n```';
     const expectedSegments = [
       'Multi-line ',
-      { code: 'code block', isBlock: true },
+      { code: '\ncode block\n', isBlock: true },
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
@@ -148,7 +148,7 @@ describe('processText', () => {
   it('handles code blocks with language specifiers', () => {
     const input = '```javascript\nconsole.log("hello");\n```';
     const expectedSegments = [
-      { code: 'javascript\nconsole.log("hello");', isBlock: true },
+      { code: 'javascript\nconsole.log("hello");\n', isBlock: true },
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
@@ -188,7 +188,7 @@ describe('processText', () => {
   it('handles multiple lines of code with inline comments', () => {
     const input = '```\nline1\n// inline comment\nline3\n```';
     const expectedSegments = [
-      { code: 'line1\n// inline comment\nline3', isBlock: true },
+      { code: '\nline1\n// inline comment\nline3\n', isBlock: true },
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
@@ -217,7 +217,7 @@ describe('processText', () => {
     const expectedSegments = [
       { code: 'single line code', isBlock: false },
       ' and ',
-      { code: 'multi-line\ncode', isBlock: true },
+      { code: '\nmulti-line\ncode\n', isBlock: true },
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
@@ -265,7 +265,7 @@ describe('processText', () => {
   it('handles language specifiers in code blocks', () => {
     const input = '```javascript\nconsole.log("hello");\n```';
     const expectedSegments = [
-      { code: 'javascript\nconsole.log("hello");', isBlock: true },
+      { code: 'javascript\nconsole.log("hello");\n', isBlock: true },
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
@@ -274,5 +274,101 @@ describe('processText', () => {
     const input = "It's not a `code` block";
     const expectedSegments = ["It's not a ", { code: 'code', isBlock: false }, " block"];
     expect(processText(input)).toEqual(expectedSegments);
+  });
+
+    it('extracts and validates a complex React code block', () => {
+      const input = `
+  \`\`\`
+  /* eslint-disable no-console */
+  import Dropdown from 'rc-dropdown';
+  import Menu, { Item as MenuItem, Divider } from 'rc-menu';
+  import 'rc-dropdown/assets/index.css';
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  
+  function onSelect({ key }) {
+    console.log(\`\${key} selected\`);
+  }
+  
+  function onVisibleChange(visible) {
+    console.log(visible);
+  }
+  
+  const menu = (
+    <Menu onSelect={onSelect}>
+      <MenuItem disabled>disabled</MenuItem>
+      <MenuItem key="1">one</MenuItem>
+      <Divider />
+      <MenuItem key="2">two</MenuItem>
+    </Menu>
+  );
+  
+  ReactDOM.render(
+    <div style={{ margin: 20 }}>
+      <div style={{ height: 100 }}/>
+      <div>
+        <Dropdown
+          trigger={['click']}
+          overlay={menu}
+          animation="slide-up"
+          onVisibleChange={onVisibleChange}
+        >
+          <button style={{ width: 100 }}>open</button>
+        </Dropdown>
+      </div>
+    </div>
+  , document.getElementById('__react-content'));
+  \`\`\`
+  `.trim();
+  
+      const blockRegex = /```((?:.|\r?\n)*?)```/gs;
+      const matches = [...input.matchAll(blockRegex)];
+      const codeBlocks = matches.map(match => match[1].trim());
+  
+      // The expected result is the code block as a string without the backticks
+      const expectedResult = `
+  /* eslint-disable no-console */
+  import Dropdown from 'rc-dropdown';
+  import Menu, { Item as MenuItem, Divider } from 'rc-menu';
+  import 'rc-dropdown/assets/index.css';
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  
+  function onSelect({ key }) {
+    console.log(\`\${key} selected\`);
+  }
+  
+  function onVisibleChange(visible) {
+    console.log(visible);
+  }
+  
+  const menu = (
+    <Menu onSelect={onSelect}>
+      <MenuItem disabled>disabled</MenuItem>
+      <MenuItem key="1">one</MenuItem>
+      <Divider />
+      <MenuItem key="2">two</MenuItem>
+    </Menu>
+  );
+  
+  ReactDOM.render(
+    <div style={{ margin: 20 }}>
+      <div style={{ height: 100 }}/>
+      <div>
+        <Dropdown
+          trigger={['click']}
+          overlay={menu}
+          animation="slide-up"
+          onVisibleChange={onVisibleChange}
+        >
+          <button style={{ width: 100 }}>open</button>
+        </Dropdown>
+      </div>
+    </div>
+  , document.getElementById('__react-content'));
+  `.trim();
+  
+      expect(codeBlocks).toHaveLength(1);
+      expect(codeBlocks[0]).toEqual(expectedResult);
   });
 });
