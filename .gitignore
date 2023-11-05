@@ -5,3 +5,4 @@
 .pnp.*
 node_modules
 .npmrc
+.coverage
