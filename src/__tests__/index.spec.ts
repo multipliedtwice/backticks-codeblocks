@@ -1,4 +1,5 @@
-import { processText } from '.';
+import { CodeSegment, processText } from '..';
+import { fuzzValues } from '../fuzz/fuzz';
 
 describe('processText', () => {
   it('should convert block code to preformatted text', () => {
@@ -71,6 +72,15 @@ describe('processText', () => {
   it('handles interrupted code blocks', () => {
     const input = 'Start ```incomplete code block';
     const expectedSegments = ['Start ```incomplete code block'];
+    expect(processText(input)).toEqual(expectedSegments);
+  });
+
+  it('handles interrupted code blocks', () => {
+    const input = 'Start ```incomplete code `block`';
+    const expectedSegments = ['Start ```incomplete code ', {
+      "code": "block",
+      "isBlock": false,
+    }];
     expect(processText(input)).toEqual(expectedSegments);
   });
 
@@ -152,7 +162,7 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('handles backticks at the start of the text', () => {
     const input = '`code` at the start';
     const expectedSegments = [
@@ -161,7 +171,7 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('handles backticks with spaces inside', () => {
     const input = '` code with spaces ` and more text';
     const expectedSegments = [
@@ -170,7 +180,7 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('handles multiple backticks for emphasis in code', () => {
     const input = '```some ``emphasized`` code```';
     const expectedSegments = [
@@ -178,13 +188,13 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('handles backticks inside a word', () => {
     const input = 'word`inside`word';
     const expectedSegments = ['word', { code: 'inside', isBlock: false }, 'word'];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('handles multiple lines of code with inline comments', () => {
     const input = '```\nline1\n// inline comment\nline3\n```';
     const expectedSegments = [
@@ -192,7 +202,7 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('ignores single backticks within code blocks', () => {
     const input = '```code ` with single ` backtick```';
     const expectedSegments = [
@@ -200,7 +210,7 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('handles mixed content with plaintext and code blocks', () => {
     const input = 'Text, `inline code`, text, ```block code```';
     const expectedSegments = [
@@ -211,7 +221,7 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('differentiates between single line and multi-line code blocks', () => {
     const input = '`single line code` and ```\nmulti-line\ncode\n```';
     const expectedSegments = [
@@ -269,15 +279,15 @@ describe('processText', () => {
     ];
     expect(processText(input)).toEqual(expectedSegments);
   });
-  
+
   it('treats single backticks within words as apostrophes', () => {
     const input = "It's not a `code` block";
     const expectedSegments = ["It's not a ", { code: 'code', isBlock: false }, " block"];
     expect(processText(input)).toEqual(expectedSegments);
   });
 
-    it('extracts and validates a complex React code block', () => {
-      const input = `
+  it('extracts and validates a complex React code block', () => {
+    const input = `
   \`\`\`
   /* eslint-disable no-console */
   import Dropdown from 'rc-dropdown';
@@ -320,13 +330,13 @@ describe('processText', () => {
   , document.getElementById('__react-content'));
   \`\`\`
   `.trim();
-  
-      const blockRegex = /```((?:.|\r?\n)*?)```/gs;
-      const matches = [...input.matchAll(blockRegex)];
-      const codeBlocks = matches.map(match => match[1].trim());
-  
-      // The expected result is the code block as a string without the backticks
-      const expectedResult = `
+
+    const blockRegex = /```((?:.|\r?\n)*?)```/gs;
+    const matches = [...input.matchAll(blockRegex)];
+    const codeBlocks = matches.map(match => match[1].trim());
+
+    // The expected result is the code block as a string without the backticks
+    const expectedResult = `
   /* eslint-disable no-console */
   import Dropdown from 'rc-dropdown';
   import Menu, { Item as MenuItem, Divider } from 'rc-menu';
@@ -367,8 +377,39 @@ describe('processText', () => {
     </div>
   , document.getElementById('__react-content'));
   `.trim();
+
+    expect(codeBlocks).toHaveLength(1);
+    expect(codeBlocks[0]).toEqual(expectedResult);
+  });
+
+  describe('processText with fuzzy inputs', () => {
+    fuzzValues.forEach((fuzzValue, index) => {
+      it(`Test ${index + 1}: processText with fuzz input`, () => {
+        let result: (string | CodeSegment)[];
   
-      expect(codeBlocks).toHaveLength(1);
-      expect(codeBlocks[0]).toEqual(expectedResult);
+        try {
+          const inputString = typeof fuzzValue === 'string' ? fuzzValue : JSON.stringify(fuzzValue);
+          result = processText(inputString);
+        } catch (error) {
+          result = []; // Handle errors or set default value
+        }
+  
+        // General checks
+        expect(Array.isArray(result)).toBe(true);
+  
+        // Check if each segment is either a string or a CodeSegment
+        result.forEach(segment => {
+          expect(typeof segment === 'string' || (typeof segment === 'object' && segment !== null)).toBe(true);
+  
+          // If segment is a CodeSegment, check its structure
+          if (typeof segment === 'object') {
+            expect(segment).toHaveProperty('code');
+            expect(segment).toHaveProperty('isBlock');
+            expect(typeof segment.code).toBe('string');
+            expect(typeof segment.isBlock).toBe('boolean');
+          }
+        });
+      });
+    });
   });
 });

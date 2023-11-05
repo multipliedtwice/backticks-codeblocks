@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1699155305178" clover="3.2.0">
+  <project timestamp="1699155305178" name="All files">
+    <metrics statements="28" coveredstatements="28" conditionals="7" coveredconditionals="7" methods="4" coveredmethods="4" elements="39" coveredelements="39" complexity="0" loc="28" ncloc="28" packages="1" files="1" classes="1"/>
+    <file name="index.ts" path="C:\Users\xtate\backticks-codeblocks\src\index.ts">
+      <metrics statements="28" coveredstatements="28" conditionals="7" coveredconditionals="7" methods="4" coveredmethods="4"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="124" type="stmt"/>
+      <line num="8" count="124" type="stmt"/>
+      <line num="9" count="124" type="stmt"/>
+      <line num="11" count="124" type="stmt"/>
+      <line num="14" count="124" type="stmt"/>
+      <line num="16" count="124" type="stmt"/>
+      <line num="19" count="124" type="stmt"/>
+      <line num="21" count="2244" type="stmt"/>
+      <line num="23" count="2244" type="stmt"/>
+      <line num="24" count="10029" type="cond" truecount="1" falsecount="0"/>
+      <line num="25" count="10017" type="stmt"/>
+      <line num="28" count="10029" type="stmt"/>
+      <line num="30" count="10029" type="cond" truecount="1" falsecount="0"/>
+      <line num="31" count="8011" type="stmt"/>
+      <line num="34" count="10029" type="stmt"/>
+      <line num="38" count="10029" type="stmt"/>
+      <line num="41" count="2244" type="cond" truecount="1" falsecount="0"/>
+      <line num="42" count="2230" type="stmt"/>
+      <line num="47" count="124" type="stmt"/>
+      <line num="50" count="124" type="stmt"/>
+      <line num="51" count="124" type="stmt"/>
+      <line num="53" count="124" type="stmt"/>
+      <line num="54" count="4138" type="cond" truecount="2" falsecount="0"/>
+      <line num="55" count="2120" type="stmt"/>
+      <line num="57" count="2018" type="stmt"/>
+      <line num="62" count="124" type="stmt"/>
+      <line num="63" count="20156" type="cond" truecount="2" falsecount="0"/>
+    </file>
+  </project>
+</coverage>
