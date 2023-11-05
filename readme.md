@@ -1,5 +1,7 @@
 # backticks-codeblocks
 
+![backticks-codeblocks](./static/backticks-codeblocks.png)
+
 Package provides a simple and efficient way to parse strings containing backticks. It differentiates between inline code, marked by single backticks, and code blocks, surrounded by triple backticks, and returns them as structured data. It's particularly useful for processing markdown text or any text that follows a similar convention for denoting code segments.
 
 ## Installation
