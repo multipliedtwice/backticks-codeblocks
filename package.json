@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/multipliedtwice/backticks-codeblocks#readme",
   "devDependencies": {
-    "@types/jest": "^29.5.7",
-    "@types/node": "^20.8.10",
-    "eslint": "^8.53.0",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.6",
+    "eslint": "^8.56.0",
     "jest": "^29.7.0",
-    "prettier": "^3.0.3",
-    "terser": "^5.24.0",
+    "prettier": "^3.1.1",
+    "terser": "^5.26.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   }
 }
