@@ -44,8 +44,8 @@ exports.fuzzValues = [
     new DataView(new ArrayBuffer(16)),
     JSON.stringify({ id_token: "invalid_token" }),
     new Proxy({}, {}),
-    new WeakRef({}),
-    new FinalizationRegistry((key) => { }),
+    new WeakRef({}), // available in ES2021, ensure compatibility
+    new FinalizationRegistry((key) => { }), // available in ES2021, ensure compatibility
     function* generator() {
         yield "invalid_token";
     },

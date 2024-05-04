@@ -1,7 +1,7 @@
 {
   "name": "backticks-codeblocks",
-  "version": "1.0.5",
-  "description": "A  tiny utility to parse text with backticks into code blocks and inline code",
+  "version": "1.0.7",
+  "description": "A tiny (700b gzipped) utility to parse text with backticks into code blocks and inline code",
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
