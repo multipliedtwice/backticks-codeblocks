@@ -2,7 +2,7 @@
 
 Backticks Codeblocks is a library for parsing text and generating structures that can be rendered as beautiful code blocks using PrismJS. It supports integration with modern JavaScript frameworks such as React, Angular, Vue, and Svelte.
 
-## Features
+## Syntax highlighting
 - Generates PrismJS-compatible structures
 - Supports multiple JavaScript frameworks (React, Angular, Vue, Svelte)
 - Easy integration
