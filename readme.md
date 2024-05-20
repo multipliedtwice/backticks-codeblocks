@@ -1,5 +1,13 @@
 # backticks-codeblocks
 
+Backticks Codeblocks is a library for parsing text and generating structures that can be rendered as beautiful code blocks using PrismJS. It supports integration with modern JavaScript frameworks such as React, Angular, Vue, and Svelte.
+
+## Features
+- Generates PrismJS-compatible structures
+- Supports multiple JavaScript frameworks (React, Angular, Vue, Svelte)
+- Easy integration
+- Customizable
+
 ![backticks-codeblocks](./static/backticks-codeblocks.png)
 
 Package provides a simple and efficient way to parse strings containing backticks. It differentiates between inline code, marked by single backticks, and code blocks, surrounded by triple backticks, and returns them as structured data. It's particularly useful for processing markdown text or any text that follows a similar convention for denoting code segments.
