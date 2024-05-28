@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc && terser -c -m toplevel -o dist/index.js -- dist/index.js"
+    "build": "tsc && terser -c -m toplevel -o dist/index.js -- dist/index.js",
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",

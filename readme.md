@@ -1,8 +1,15 @@
+[![npm version](https://badge.fury.io/js/backticks-codeblocks.svg)](https://badge.fury.io/js/backticks-codeblocks)
+[![npm](https://img.shields.io/npm/dt/backticks-codeblocks.svg)](https://www.npmjs.com/package/backticks-codeblocks)
+[![HitCount](https://hits.dwyl.com/multipliedtwice/backticks-codeblocks.svg?style=flat)](http://hits.dwyl.com/multipliedtwice/backticks-codeblocks)
+[![Coverage](https://img.shields.io/codecov/c/github/multipliedtwice/backticks-codeblocks/main.svg)](https://codecov.io/gh/multipliedtwice/backticks-codeblocks)
+[![npm](https://img.shields.io/npm/l/backticks-codeblocks.svg)](LICENSE)
+
 # Backticks-Codeblocks, syntax highlighting parser
 
 Backticks Codeblocks is a library for parsing text and generating structures that can be rendered as beautiful code blocks using PrismJS. It supports integration with modern JavaScript frameworks such as React, Angular, Vue, and Svelte.
 
 ## Features
+
 - Generates PrismJS-compatible structures
 - Supports multiple JavaScript frameworks (React, Angular, Vue, Svelte)
 - Easy integration

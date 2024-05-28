@@ -77,10 +77,13 @@ describe('processText', () => {
 
   it('handles interrupted code blocks', () => {
     const input = 'Start ```incomplete code `block`';
-    const expectedSegments = ['Start ```incomplete code ', {
-      "code": "block",
-      "isBlock": false,
-    }];
+    const expectedSegments = [
+      'Start ```incomplete code ',
+      {
+        code: 'block',
+        isBlock: false,
+      },
+    ];
     expect(processText(input)).toEqual(expectedSegments);
   });
 
@@ -191,7 +194,11 @@ describe('processText', () => {
 
   it('handles backticks inside a word', () => {
     const input = 'word`inside`word';
-    const expectedSegments = ['word', { code: 'inside', isBlock: false }, 'word'];
+    const expectedSegments = [
+      'word',
+      { code: 'inside', isBlock: false },
+      'word',
+    ];
     expect(processText(input)).toEqual(expectedSegments);
   });
 
@@ -282,7 +289,11 @@ describe('processText', () => {
 
   it('treats single backticks within words as apostrophes', () => {
     const input = "It's not a `code` block";
-    const expectedSegments = ["It's not a ", { code: 'code', isBlock: false }, " block"];
+    const expectedSegments = [
+      "It's not a ",
+      { code: 'code', isBlock: false },
+      ' block',
+    ];
     expect(processText(input)).toEqual(expectedSegments);
   });
 
@@ -333,7 +344,7 @@ describe('processText', () => {
 
     const blockRegex = /```((?:.|\r?\n)*?)```/gs;
     const matches = [...input.matchAll(blockRegex)];
-    const codeBlocks = matches.map(match => match[1].trim());
+    const codeBlocks = matches.map((match) => match[1].trim());
 
     // The expected result is the code block as a string without the backticks
     const expectedResult = `
@@ -386,21 +397,27 @@ describe('processText', () => {
     fuzzValues.forEach((fuzzValue, index) => {
       it(`Test ${index + 1}: processText with fuzz input`, () => {
         let result: (string | CodeSegment)[];
-  
+
         try {
-          const inputString = typeof fuzzValue === 'string' ? fuzzValue : JSON.stringify(fuzzValue);
+          const inputString =
+            typeof fuzzValue === 'string'
+              ? fuzzValue
+              : JSON.stringify(fuzzValue);
           result = processText(inputString);
         } catch (error) {
           result = []; // Handle errors or set default value
         }
-  
+
         // General checks
         expect(Array.isArray(result)).toBe(true);
-  
+
         // Check if each segment is either a string or a CodeSegment
-        result.forEach(segment => {
-          expect(typeof segment === 'string' || (typeof segment === 'object' && segment !== null)).toBe(true);
-  
+        result.forEach((segment) => {
+          expect(
+            typeof segment === 'string' ||
+              (typeof segment === 'object' && segment !== null)
+          ).toBe(true);
+
           // If segment is a CodeSegment, check its structure
           if (typeof segment === 'object') {
             expect(segment).toHaveProperty('code');
