@@ -54,7 +54,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Publish 🚀
-        working-directory: ./src
+        working-directory: ./
         run: npx semantic-release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
