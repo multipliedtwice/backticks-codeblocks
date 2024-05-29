@@ -6,7 +6,7 @@
 
 # Backticks-Codeblocks, syntax highlighting parser
 
-Backticks Codeblocks is a library for parsing text and generating structures that can be rendered as beautiful code blocks using PrismJS. It supports integration with modern JavaScript frameworks such as React, Angular, Vue, and Svelte.
+Backticks Codeblocks is a library for parsing text and generating structures that can be rendered as code blocks or inline code using PrismJS. It supports integration with modern JavaScript frameworks such as React, Angular, Vue, and Svelte.
 
 ## Features
 
