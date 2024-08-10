@@ -272,4 +272,7 @@ The `processText` function works fairly fast and is capable of handling large te
 
 This project is open-sourced software licensed under the MIT license.
 
-psst, want some free Kanban app with chat for team of any size? https://rememo.io
+### Credits:
+- [Super Kick Gym](https://en.bjj-bangkok.com)
+
+- [Rememo](https://rememo.io)
