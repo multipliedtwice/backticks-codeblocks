@@ -203,7 +203,7 @@ export const processText = (
   // Step 1: Temporarily replace special cases
   text = temporarilyReplaceSpecialCases(text, effectiveIgnorePatterns);
 
-  // Steps 2 to 5: Same as before
+  // Steps 2 to 5: Replace backticks
   text = escapeBackticks(text);
   text = replaceEmptyCodeBlocks(text);
   const blockSegments = iterateMatches(blockRegex, true, text);
