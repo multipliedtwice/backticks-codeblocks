@@ -16,7 +16,8 @@
     "markdown",
     "codeblocks",
     "syntax-highlighting",
-    "backticks"
+    "backticks",
+    "fenced code"
   ],
   "author": "multipliedtwice",
   "license": "MIT",
