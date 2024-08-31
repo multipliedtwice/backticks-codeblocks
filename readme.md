@@ -4,7 +4,7 @@
 [![Coverage](https://img.shields.io/codecov/c/github/multipliedtwice/backticks-codeblocks/main.svg)](https://codecov.io/gh/multipliedtwice/backticks-codeblocks)
 [![npm](https://img.shields.io/npm/l/backticks-codeblocks.svg)](LICENSE)
 
-# Backticks-Codeblocks, syntax highlighting parser
+# Backticks-Codeblocks, syntax highlighting parser for fenced code
 
 Backticks Codeblocks is a **code fence** library for parsing text and generating structures that can be rendered as code blocks or inline code using PrismJS. It supports integration with modern JavaScript frameworks such as React, Angular, Vue, and Svelte.
 
