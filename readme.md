@@ -12,8 +12,8 @@ Backticks Codeblocks is a **code fence** library for parsing text and generating
 
 - Generates PrismJS-compatible structures
 - Supports multiple JavaScript frameworks (React, Angular, Vue, Svelte)
-- Easy integration
-- Customizable
+- Easy integration (works as a pure function)
+- Customizable (ignore edge cases by regex)
 
 ![backticks-codeblocks](./static/backticks-codeblocks.png)
 
